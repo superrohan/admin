@@ -1,0 +1,15 @@
+com\company\adminbackend\AdminAppBackendApplication.class
+com\company\adminbackend\security\JwtRoleConverter.class
+com\company\adminbackend\config\WebClientConfig.class
+com\company\adminbackend\service\AdminService.class
+com\company\adminbackend\client\ControllerClient.class
+com\company\adminbackend\audit\AuditFilter.class
+com\company\adminbackend\audit\AuditEvent.class
+com\company\adminbackend\config\AudienceValidator.class
+com\company\adminbackend\security\ServiceTokenProvider.class
+com\company\adminbackend\audit\AuditEvent$Builder.class
+com\company\adminbackend\audit\AuditService.class
+com\company\adminbackend\controller\AdminController.class
+com\company\adminbackend\model\ScanResponse.class
+com\company\adminbackend\security\UserContextService.class
+com\company\adminbackend\config\SecurityConfig.class

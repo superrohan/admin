@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: admin-app-backend
+
+  # --- OAuth2 Resource Server ---
+  # Validates inbound JWTs issued by Microsoft Entra ID for the AdminApp.
+  # The issuer-uri lets Spring auto-discover JWKS endpoint, supported algorithms, etc.
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/${ENTRA_TENANT_ID}/v2.0
+          audiences: adminapp-backend
+
+      # --- OAuth2 Client (client-credentials) ---
+      # Used by ServiceTokenProvider to obtain a service token for calling ControllerApp.
+      client:
+        registration:
+          controller-app:
+            provider: entra-id
+            client-id: ${ENTRA_CLIENT_ID}
+            client-secret: ${ENTRA_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: api://${CONTROLLER_APP_CLIENT_ID}/.default
+        provider:
+          entra-id:
+            token-uri: https://login.microsoftonline.com/${ENTRA_TENANT_ID}/oauth2/v2.0/token
+
+# --- Downstream service ---
+controller-app:
+  base-url: ${CONTROLLER_APP_BASE_URL:http://localhost:8081}
+
+# --- Logging ---
+logging:
+  level:
+    com.company.adminbackend: DEBUG
+    com.company.adminbackend.audit: INFO
+  pattern:
+    console: "%d{ISO8601} [%thread] %-5level [%X{correlationId}] %logger{36} - %msg%n"
